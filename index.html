@@ -3,55 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ouverture de SpotTrack...</title>
+    <title>SpotTrack - Redirection...</title>
     <style>
-        body {
-            font-family: sans-serif;
-            background-color: #1a1a1a;
-            color: #ffffff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            text-align: center;
-            padding: 20px;
-        }
+        body { background-color: #1a1a1a; color: white; font-family: sans-serif; text-align: center; padding: 50px; margin-top: 20px;}
         h2 { color: #4CAF50; }
-        .loader {
-            border: 4px solid #333;
-            border-top: 4px solid #4CAF50;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin-bottom: 20px;
-        }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .btn { display: inline-block; padding: 15px 25px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; margin-top: 30px; }
     </style>
 </head>
 <body>
-    <div class="loader"></div>
-    <h2>📍 Redirection en cours...</h2>
-    <p id="message">Ouverture de SpotTrack pour afficher le spot.</p>
+    <h2>📍 Ouverture de SpotTrack...</h2>
+    <p>La carte est en train de se centrer sur le spot.</p>
+    <p>Si l'application ne s'ouvre pas automatiquement, cliquez sur le bouton ci-dessous :</p>
+    
+    <a id="appLink" href="#" class="btn">Ouvrir le Spot</a>
 
     <script>
-        window.onload = function() {
-            // 1. Récupère toutes les coordonnées après le "?" du lien
-            var parametres = window.location.search;
-            
-            // 2. Déclenche le lien magique SpotTrack
-            if (parametres) {
-                window.location.replace("spottrack://share" + parametres);
-            }
-
-            // 3. Message de secours si l'application n'est pas installée
-            setTimeout(function() {
-                document.getElementById("message").innerHTML = 
-                "Si l'application ne s'ouvre pas automatiquement, assurez-vous que SpotTrack est bien installée sur ce téléphone.";
-            }, 3000);
-        };
+        // 1. On récupère les coordonnées envoyées dans le lien web
+        const queryString = window.location.search;
+        
+        // CORRECTION ICI : On a enlevé le mot "share" pour que l'appli s'ouvre sur l'écran principal (la racine)
+        const deepLink = "spottrack://" + queryString;
+        
+        // 3. On sécurise le bouton de secours
+        document.getElementById('appLink').href = deepLink;
+        
+        // 4. On lance la redirection automatique vers l'application
+        setTimeout(() => {
+            window.location.replace(deepLink);
+        }, 500); 
     </script>
 </body>
 </html>
